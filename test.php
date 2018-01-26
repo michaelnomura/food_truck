@@ -3,7 +3,13 @@
 <title>Food Truck</title>
 </head>
 <body>
+
 <h2>Menu Items:</h2>
+    <?php 
+    $tacos = $_POST[tacoCount];
+    echo "test";
+    echo "Hello World" . $_POST[tacoCount];
+    ?>
 <form action="" method="post">
     Taco(s) <br /><input type="number" name="item" value="tacoCount"><br />
     Extras:<br />
