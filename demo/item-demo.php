@@ -77,9 +77,11 @@ function showForm()
 		foreach($config->items as $item)
           {
             
+            
             echo '<pre>';
             echo var_dump($item->Extras);
             echo '</pre>';
+            
             
             //echo "<p>ID:$item->ID  Name:$item->Name</p>"; 
             //echo '<p>Taco <input type="text" name="item_1" /></p>';
@@ -87,7 +89,7 @@ function showForm()
             echo '<p>' . $item->Name . ' <input type="number" name="item_' . $item->ID . '" /></p>';
             
             foreach ($item->Extras as $extra){
-                echo '<p>' . $extra . '<input type="checkbox" name="item_' . $item->ID . '" />';
+                echo '<p>' . $extra . '<input type="checkbox" name="ex_' . $extra . '" /></p>';
             }
             
             
@@ -142,12 +144,15 @@ function showData()
 			
 			*/
             echo "<p>You ordered $value of item number $id</p>";
-            
         }
-        
-        
-
-    }
+        /*
+        }else if(substr($name,0,3)=='ex_')
+        {
+            $name_array = explode('_',$name);
+            
+            $ex = $ex_array[1];
+            }
+        */
 	
 	
 	
