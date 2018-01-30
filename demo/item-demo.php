@@ -89,7 +89,7 @@ function showForm()
             echo '<p>' . $item->Name . ' <input type="number" name="item_' . $item->ID . '" /></p>';
             
             foreach ($item->Extras as $extra){
-                echo '<p>' . $extra . '<input type="checkbox" name="ex_' . $extra . '" /></p>';
+                echo '<p>' . $extra . '<input type="checkbox" name="ex@' . $extra . '" /></p>';
             }
             
             
@@ -106,6 +106,13 @@ function showForm()
 	';
 	get_footer(); #defaults to footer_inc.php
         }
+
+/*
+function getItem(ID)
+{//returns item by id
+    ID =
+}
+*/
 
 function showData()
 {#form submits here we show entered name
@@ -145,20 +152,23 @@ function showData()
 			*/
             echo "<p>You ordered $value of item number $id</p>";
         }
-        /*
-        }else if(substr($name,0,3)=='ex_')
+        
+        else if(substr($name,0,3)=='ex@')
         {
-            $name_array = explode('_',$name);
+            $ex_array = explode('@',$name);
             
             $ex = $ex_array[1];
+            echo "<p>Add: $ex</p>";
             }
-        */
+            
+        
 	
 	
 	
-	
+    }
 	echo '<p align="center"><a href="' . THIS_PAGE . '">RESET</a></p>';
 	get_footer(); #defaults to footer_inc.php
+    
 }
 ?>
 
