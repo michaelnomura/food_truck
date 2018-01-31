@@ -154,25 +154,25 @@ function showData()
 			//forcibly cast to an int in the process
             
             
-            
-            $testValue = (int)$value;
-            
-            var_dump($testValue);
+            //var_dump($testValue);
             
             
-            if($testValue < 1){
+            if($value < 1){
                 echo 'none';
             }else{
                 echo 'Test';
+                $item = getItem($id,$config->items);
+                echo "<p>You ordered $value of item number $item->Name</p>";
+                
             }
             $id = (int)$name_array[1];
-            $item = getItem($id,$config->items);
+            
 
             
 
 
 
-            echo "<p>You ordered $value of item number $id</p>";
+            
             
 
 			/*
@@ -193,19 +193,19 @@ function showData()
             
         }
         
+        //check if input indicates extras
         else if(substr($name,0,3)=='ex@')
         {
+            //split array on '@'
             $ex_array = explode('@',$name);
             
+            //displays extra
             $ex = $ex_array[1];
             echo "<p>Add: $ex</p>";
-            }
-            
-        
-	
-	
+            }	
 	
     }
+    
 	echo '<p align="center"><a href="' . THIS_PAGE . '">RESET</a></p>';
 	get_footer(); #defaults to footer_inc.php
     
