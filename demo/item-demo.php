@@ -109,26 +109,34 @@ function showForm()
 	get_footer(); #defaults to footer_inc.php
         }
 
-/*
-function getItem($id)
+
+function getItem($id,$ar)
 {//returns item by id
-    foreach($item->ID as $item)
+    foreach($ar as $item)
     {
         if ($id == $item->ID)
         {
-            echo $item->name;
+            return $item;
         }
     }
     
 }
-*/
+
 
 
 function showData()
 {#form submits here we show entered name
+    
+    global $config;
 	
+    
+    get_header(); #defaults to footer_inc.php
+    
     //dumpDie($_POST);
-     get_header(); #defaults to footer_inc.php
+    
+    
+    
+    
 	
 	
 	echo '<h3 align="center">' . smartTitle() . '</h3>';
@@ -144,7 +152,28 @@ function showData()
 
             //id is the second element of the array
 			//forcibly cast to an int in the process
+            
+            
+            
+            $testValue = (int)$value;
+            
+            var_dump($testValue);
+            
+            
+            if($testValue < 1){
+                echo 'none';
+            }else{
+                echo 'Test';
+            }
             $id = (int)$name_array[1];
+            $item = getItem($id,$config->items);
+
+            
+
+
+
+            echo "<p>You ordered $value of item number $id</p>";
+            
 
 			/*
 				Here is where you'll do most of your work
@@ -161,9 +190,7 @@ function showData()
 			
 			*/
             
-            //$itemName = getItem($id);
             
-            echo "<p>You ordered $value of item number $id</p>";
         }
         
         else if(substr($name,0,3)=='ex@')
