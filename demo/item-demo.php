@@ -155,17 +155,20 @@ function showData()
             
             
             //var_dump($testValue);
-            
-            
-            if($value < 1){
-                echo 'none';
-            }else{
-                echo 'Test';
-                $item = getItem($id,$config->items);
-                echo "<p>You ordered $value of item number $item->Name</p>";
-                
-            }
             $id = (int)$name_array[1];
+            
+            
+            if($value > 0){
+                //echo 'Test';
+                $item = getItem($id,$config->items);
+                echo "<p>You ordered " . $value . " " . $item->Name . "s</p>";
+                echo $item->Price * $value;
+            }//else{
+                //echo 'none';
+                
+                
+            //}
+            
             
 
             
