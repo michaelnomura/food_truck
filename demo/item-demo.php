@@ -25,7 +25,7 @@
  */
 
 # '../' works for a sub-folder.  use './' for the root  
-require '../inc_0700/config_inc.php'; #provides configuration, pathing, error handling, db credentials
+require 'config_inc.php'; #provides configuration, pathing, error handling, db credentials
 include 'items.php'; 
 /*
 $config->metaDescription = 'Web Database ITC281 class website.'; #Fills <meta> tags.
@@ -76,8 +76,7 @@ function showForm()
     
 		foreach($config->items as $item)
           {
-            
-            
+
             /*
             echo '<pre>';
             echo var_dump($item->Extras);
@@ -93,10 +92,7 @@ function showForm()
             foreach ($item->Extras as $extra){
                 echo '<p>' . $extra . '<input type="checkbox" name="ex@' . $extra . '" /></p>';
             }
-            
-            
-            
-              
+     
           }       
  
           echo '
@@ -123,7 +119,6 @@ function getItem($id,$ar)
 }
 
 
-
 function showData()
 {#form submits here we show entered name
     
@@ -133,12 +128,7 @@ function showData()
     get_header(); #defaults to footer_inc.php
     
     //dumpDie($_POST);
-    
-    
-    
-    
-	
-	
+
 	echo '<h3 align="center">' . smartTitle() . '</h3>';
 	
 	foreach($_POST as $name => $value)
@@ -162,21 +152,13 @@ function showData()
                 //echo 'Test';
                 $item = getItem($id,$config->items);
                 echo "<p>You ordered " . $value . " " . $item->Name . "s</p>";
-                echo $item->Price * $value;
+                echo '$' . $item->Price * $value;
             }//else{
                 //echo 'none';
                 
                 
             //}
-            
-            
 
-            
-
-
-
-            
-            
 
 			/*
 				Here is where you'll do most of your work
@@ -192,8 +174,6 @@ function showData()
 				and create subtotals, etc.
 			
 			*/
-            
-            
         }
         
         //check if input indicates extras
@@ -214,21 +194,3 @@ function showData()
     
 }
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
