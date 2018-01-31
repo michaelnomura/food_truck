@@ -78,9 +78,11 @@ function showForm()
           {
             
             
+            /*
             echo '<pre>';
             echo var_dump($item->Extras);
             echo '</pre>';
+            */
             
             
             //echo "<p>ID:$item->ID  Name:$item->Name</p>"; 
@@ -108,11 +110,19 @@ function showForm()
         }
 
 /*
-function getItem(ID)
+function getItem($id)
 {//returns item by id
-    ID =
+    foreach($item->ID as $item)
+    {
+        if ($id == $item->ID)
+        {
+            echo $item->name;
+        }
+    }
+    
 }
 */
+
 
 function showData()
 {#form submits here we show entered name
@@ -150,6 +160,9 @@ function showData()
 				and create subtotals, etc.
 			
 			*/
+            
+            //$itemName = getItem($id);
+            
             echo "<p>You ordered $value of item number $id</p>";
         }
         

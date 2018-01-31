@@ -1,0 +1,1 @@
+[Jan-29-2018 15:55:34] Undefined variable: ex_array in /home/micnom/michaelnomura.dreamhosters.com/wn18/demo/item-demo.php on line 153
