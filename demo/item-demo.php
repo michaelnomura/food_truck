@@ -121,6 +121,12 @@ function getItem($id,$ar)
 
 function showData()
 {#form submits here we show entered name
+    /*
+    echo'<pre>';
+    var_dump($_POST);
+    echo'</pre>';
+    die;
+    */
     
     global $config;
 	
@@ -130,6 +136,8 @@ function showData()
     //dumpDie($_POST);
 
 	echo '<h3 align="center">' . smartTitle() . '</h3>';
+    
+    $total = 0.0;
 	
 	foreach($_POST as $name => $value)
     {//loop the form elements
@@ -148,46 +156,36 @@ function showData()
             $id = (int)$name_array[1];
             
             
-            if($value > 0){
+            if($value > 0)
+                {//check for items
                 //echo 'Test';
+                
                 $item = getItem($id,$config->items);
-                echo "<p>You ordered " . $value . " " . $item->Name . "s</p>";
-                echo '$' . $item->Price * $value;
-            }//else{
-                //echo 'none';
                 
-                
-            //}
+                $priceMulti = (float)$item->Price * $value;
+                //dumpDie($priceMulti);
+                //echo "<p>" . $priceMulti . "</p>";
+                echo "<p>You ordered " . $value . " " . $item->Name . "(s) $" . $priceMulti . "</p>";
+                //echo "<p>"$item->Description"</p>";
+                $total += $priceMulti;
+                }
 
 
-			/*
-				Here is where you'll do most of your work
-				Use $id to loop your array of items and return 
-				item data such as price.
-				
-				Consider creating a function to return a specific item 
-				from your items array, for example:
-				
-				$thisItem = getItem($id);
-				
-				Use $value to determine the number of items ordered 
-				and create subtotals, etc.
-			
-			*/
-        }
-        
-        //check if input indicates extras
-        else if(substr($name,0,3)=='ex@')
-        {
+        }else if(substr($name,0,3)=='ex@')
+            {
             //split array on '@'
             $ex_array = explode('@',$name);
             
             //displays extra
             $ex = $ex_array[1];
             echo "<p>Add: $ex</p>";
-            }	
+            }
+        
 	
-    }
+    }//end of for each
+    
+    //show total
+    echo "Total: $" . $total;
     
 	echo '<p align="center"><a href="' . THIS_PAGE . '">RESET</a></p>';
 	get_footer(); #defaults to footer_inc.php
