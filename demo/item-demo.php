@@ -25,7 +25,7 @@
  */
 
 # '../' works for a sub-folder.  use './' for the root  
-require '../inc_0700/config_inc.php'; #provides configuration, pathing, error handling, db credentials
+require 'config_inc.php'; #provides configuration, pathing, error handling, db credentials
 include 'items.php'; 
 /*
 $config->metaDescription = 'Web Database ITC281 class website.'; #Fills <meta> tags.
@@ -76,8 +76,7 @@ function showForm()
     
 		foreach($config->items as $item)
           {
-            
-            
+
             /*
             echo '<pre>';
             echo var_dump($item->Extras);
@@ -88,20 +87,17 @@ function showForm()
             //echo "<p>ID:$item->ID  Name:$item->Name</p>"; 
             //echo '<p>Taco <input type="text" name="item_1" /></p>';
               
-            echo '<p>' . $item->Name . ' <input type="number" name="item_' . $item->ID . '" /></p>';
+            echo '<p>' . $item->Name . " $" . $item->Price .' <input type="number" name="item_' . $item->ID . '" /></p>';
             
             foreach ($item->Extras as $extra){
-                echo '<p>' . $extra . '<input type="checkbox" name="ex@' . $extra . '" /></p>';
+                echo '<p>' . $extra . ' ' . '$0.25 ' . '<input type="checkbox" name="ex@' . $extra . '" /></p>';
             }
-            
-            
-            
-              
+     
           }       
  
           echo '
 				<p>
-					<input type="submit" value="Submit"><em>(<font color="red"><b>*</b> required field</font>)</em>
+					<input type="submit" value="Submit">
 				</p>
 		<input type="hidden" name="act" value="display" />
 	</form>
@@ -123,23 +119,16 @@ function getItem($id,$ar)
 }
 
 
-
 function showData()
-{#form submits here we show entered name
+{//form submits here we show entered name
     
     global $config;
 	
-    
     get_header(); #defaults to footer_inc.php
     
-    //dumpDie($_POST);
-    
-    
-    
-    
-	
-	
 	echo '<h3 align="center">' . smartTitle() . '</h3>';
+    
+    $total = 0.0;
 	
 	foreach($_POST as $name => $value)
     {//loop the form elements
@@ -151,84 +140,45 @@ function showData()
             $name_array = explode('_',$name);
 
             //id is the second element of the array
-			//forcibly cast to an int in the process
-            
-            
-            //var_dump($testValue);
+			//forcibly cast to an int in the process           
             $id = (int)$name_array[1];
             
-            
-            if($value > 0){
-                //echo 'Test';
+            if($value > 0)
+                {//check for items
+                
+                //use getItem function to return item data
                 $item = getItem($id,$config->items);
-                echo "<p>You ordered " . $value . " " . $item->Name . "s</p>";
-                echo $item->Price * $value;
-            }//else{
-                //echo 'none';
                 
+                //mutiply price by number of items
+                $priceMulti = (float)$item->Price * $value;
+                echo "<p>You ordered " . $value . " " . $item->Name . "(s) $" . $priceMulti . ' ' .$item->Description . "</p>";
                 
-            //}
-            
-            
-
-            
+                $total += $priceMulti;
+                }//end if statement
 
 
-
-            
-            
-
-			/*
-				Here is where you'll do most of your work
-				Use $id to loop your array of items and return 
-				item data such as price.
-				
-				Consider creating a function to return a specific item 
-				from your items array, for example:
-				
-				$thisItem = getItem($id);
-				
-				Use $value to determine the number of items ordered 
-				and create subtotals, etc.
-			
-			*/
-            
-            
-        }
-        
-        //check if input indicates extras
-        else if(substr($name,0,3)=='ex@')
-        {
+        }else if(substr($name,0,3)=='ex@')
+            {
             //split array on '@'
+            
             $ex_array = explode('@',$name);
+            
+            //add to total
+            $total += 0.25;
             
             //displays extra
             $ex = $ex_array[1];
-            echo "<p>Add: $ex</p>";
-            }	
+            echo "<p>Add $0.25 $ex</p>";
+            }
+        
 	
-    }
+    }//end of for each
+    
+    //show total
+    echo "Total: $" . $total;
     
 	echo '<p align="center"><a href="' . THIS_PAGE . '">RESET</a></p>';
 	get_footer(); #defaults to footer_inc.php
     
 }
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
