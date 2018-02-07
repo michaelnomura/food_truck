@@ -1,24 +1,12 @@
 <?php
 /**
- * item-demo2.php, based on demo_postback_nohtml.php is a single page web application that allows us to request and view 
- * a customer's name
+ * item-demo.php, based on demo_postback_nohtml.php is a single page web application that allows us to 
+ * select a quantity of items and extras and returns a total 
  *
- * web applications.
- *
- * Any number of additional steps or processes can be added by adding keywords to the switch 
- * statement and identifying a hidden form field in the previous step's form:
- *
- *<code>
- * <input type="hidden" name="act" value="next" />
- *</code>
- * 
- * The above live of code shows the parameter "act" being loaded with the value "next" which would be the 
- * unique identifier for the next step of a multi-step process
- *
- * @package ITC281
- * @author Bill Newman <williamnewman@gmail.com>
- * @version 1.1 2011/10/11
- * @link http://www.newmanix.com/
+ * @package WN18
+ * @author Michael Nomura <mnnomura@gmail.com>
+ * @version 0.9
+ * @link http://michaelnomura.dreamhosters.com
  * @license http://opensource.org/licenses/osl-3.0.php Open Software License ("OSL") v. 3.0
  * @todo finish instruction sheet
  * @todo add more complicated checkbox & radio button examples
@@ -47,24 +35,25 @@ if(isset($_REQUEST['act'])){$myAction = (trim($_REQUEST['act']));}else{$myAction
 
 switch ($myAction) 
 {//check 'act' for type of process
-	case "display": # 2)Display user's name!
+	case "display": # 2)Display total
 	 	showData();
 	 	break;
-	default: # 1)Ask user to enter their name 
+	default: # 1)Ask user to enter their order
 	 	showForm();
 }
 
 function showForm()
-{# shows form so user can enter their name.  Initial scenario
+{// shows form so user can enter their order.  Initial scenario
 	global $config;
     get_header(); #defaults to header_inc.php	
 	
-	echo 
+	//form
+    echo 
 	'<script type="text/javascript" src="' . VIRTUAL_PATH . 'include/util.js"></script>
 	<script type="text/javascript">
 		function checkForm(thisForm)
 		{//check form data for valid info
-			if(empty(thisForm.YourName,"Please Enter Your Name")){return false;}
+			if(empty(thisForm.YourName,"Please Enter Your Order")){return false;}
 			return true;//if all is passed, submit!
 		}
 	</script>
@@ -109,25 +98,28 @@ function showForm()
 function getItem($id,$ar)
 {//returns item by id
     foreach($ar as $item)
-    {
+    {//loop through items in file
         if ($id == $item->ID)
-        {
+        {//check if id matches
+            //return item info
             return $item;
-        }
-    }
-    
-}
+        }//end if statement
+    }//end for loop
+}//end function
 
 
 function showData()
 {//form submits here we show entered name
     
+    //connect to config
     global $config;
 	
     get_header(); #defaults to footer_inc.php
     
-	echo '<h3 align="center">' . smartTitle() . '</h3>';
+    //title on top of page
+	echo '<h3 align="center">Menu</h3>';
     
+    //initate total variable
     $total = 0.0;
 	
 	foreach($_POST as $name => $value)
@@ -151,7 +143,7 @@ function showData()
                 
                 //mutiply price by number of items
                 $priceMulti = (float)$item->Price * $value;
-                echo "<p>You ordered " . $value . " " . $item->Name . "(s) $" . $priceMulti . ' ' .$item->Description . "</p>";
+                echo "<p>You ordered " . $value . " " . $item->Name . "(s) $" . number_format($priceMulti,2) . ' ' .$item->Description . "</p>";
                 
                 $total += $priceMulti;
                 }//end if statement
@@ -159,8 +151,7 @@ function showData()
 
         }else if(substr($name,0,3)=='ex@')
             {
-            //split array on '@'
-            
+            //split array on '@'            
             $ex_array = explode('@',$name);
             
             //add to total
@@ -174,8 +165,11 @@ function showData()
 	
     }//end of for each
     
+    //add tax
+    $total = $total * 1.101;
+    
     //show total
-    echo "Total: $" . $total;
+    echo "Total: $" . number_format($total,2);
     
 	echo '<p align="center"><a href="' . THIS_PAGE . '">RESET</a></p>';
 	get_footer(); #defaults to footer_inc.php
