@@ -159,8 +159,7 @@ function showData()
 
         }else if(substr($name,0,3)=='ex@')
             {
-            //split array on '@'
-            
+            //split array on '@'            
             $ex_array = explode('@',$name);
             
             //add to total
