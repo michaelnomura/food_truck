@@ -5,28 +5,14 @@
  *
  * @package WN18
  * @author Michael Nomura <mnnomura@gmail.com>
- * @version 0.9
+ * @version 1.0
  * @link http://michaelnomura.dreamhosters.com
  * @license http://opensource.org/licenses/osl-3.0.php Open Software License ("OSL") v. 3.0
- * @todo finish instruction sheet
- * @todo add more complicated checkbox & radio button examples
  */
 
 # '../' works for a sub-folder.  use './' for the root  
 require 'config_inc.php'; #provides configuration, pathing, error handling, db credentials
 include 'items.php'; 
-/*
-$config->metaDescription = 'Web Database ITC281 class website.'; #Fills <meta> tags.
-$config->metaKeywords = 'SCCC,Seattle Central,ITC281,database,mysql,php';
-$config->metaRobots = 'no index, no follow';
-$config->loadhead = ''; #load page specific JS
-$config->banner = ''; #goes inside header
-$config->copyright = ''; #goes inside footer
-$config->sidebar1 = ''; #goes inside left side of page
-$config->sidebar2 = ''; #goes inside right side of page
-$config->nav1["page.php"] = "New Page!"; #add a new page to end of nav1 (viewable this page only)!!
-$config->nav1 = array("page.php"=>"New Page!") + $config->nav1; #add a new page to beginning of nav1 (viewable this page only)!!
-*/
 
 //END CONFIG AREA ----------------------------------------------------------
 
@@ -197,19 +183,11 @@ function showData()
 
                 }//end for each loop    
             }
-            
-            //loop through itemOrder
-            
-            //if itemID matches extraID (need to add something to tag extraID)
-            //mutiply price of extra by value
-            
-            
+           
             if ($extraTotal != 0)
             {
                 echo '<p>Add: $' . number_format($extraTotal,2) . ' ' . $ex . '</p>';    
             }
-            
-            //echo "<p>$itemID</p>";
             }
         
 	
